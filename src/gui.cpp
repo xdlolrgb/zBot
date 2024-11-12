@@ -135,12 +135,12 @@ void GUI::renderMainPanel() {
 
     zBot* mgr = zBot::get();
 
-    if (key) {
+    if (!key) {
         ImGui::Text("Import Replay by name\n(must be in replays folder)");
         ImGui::InputText("##replaylocation", location, sizeof(location));
         
         if (ImGui::Button("Import")) {
-            if (!key) {
+            if (key) {
                 ImGui::OpenPopup("Upgrade to Pro!");
             } else {
                 zReplay* rec = zReplay::fromFile(location);
@@ -165,7 +165,7 @@ void GUI::renderMainPanel() {
         }
     }
 
-    if (!key) {
+    if (key) {
         if (ImGui::Button("Enter Product Key")) {
             ImGui::OpenPopup("Enter your product key:");
         }
@@ -229,7 +229,7 @@ void GUI::renderMainPanel() {
 }
 
 void GUI::renderer() {
-    if (!key && zBot::get()->state != NONE && PlayLayer::get()) {
+    if (key && zBot::get()->state != NONE && PlayLayer::get()) {
         ImGui::PushFont(vl);
         
         char key1[16] = "6g6tT67BOYXNQDd";
